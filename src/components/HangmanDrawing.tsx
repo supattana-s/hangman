@@ -1,3 +1,5 @@
+import React, { useEffect } from "react";
+
 const HEAD = (
     <div
         style={{
@@ -9,7 +11,6 @@ const HEAD = (
             top: "50px",
             right: "-30px",
         }}
-        key={1}
     ></div>
 );
 const BODY = (
@@ -22,7 +23,6 @@ const BODY = (
             top: "120px",
             right: "0px",
         }}
-        key={2}
     ></div>
 );
 
@@ -38,7 +38,6 @@ const RIGHT_ARM = (
             rotate: "-30deg",
             transformOrigin: "left bottom",
         }}
-        key={3}
     ></div>
 );
 const LEFT_ARM = (
@@ -53,7 +52,6 @@ const LEFT_ARM = (
             rotate: "30deg",
             transformOrigin: "right bottom",
         }}
-        key={4}
     ></div>
 );
 const RIGHT_LEG = (
@@ -68,7 +66,6 @@ const RIGHT_LEG = (
             rotate: "60deg",
             transformOrigin: "left bottom",
         }}
-        key={5}
     ></div>
 );
 const LEFT_LEG = (
@@ -83,7 +80,6 @@ const LEFT_LEG = (
             rotate: "-60deg",
             transformOrigin: "right bottom",
         }}
-        key={6}
     ></div>
 );
 
@@ -92,11 +88,21 @@ const BODY_PARTS = [HEAD, BODY, RIGHT_ARM, LEFT_ARM, RIGHT_LEG, LEFT_LEG];
 type HangmanDrawingProps = {
     numberOfGuesses: number;
 };
+const displayBody: JSX.Element[] = [];
 
 function HangmanDrawing({ numberOfGuesses }: HangmanDrawingProps) {
+    useEffect(() => {
+        for (let i = 0; i <= numberOfGuesses; i++) {
+            displayBody.push(BODY_PARTS[i]);
+        }
+    }, [numberOfGuesses]);
+
     return (
         <div style={{ position: "relative" }}>
-            {BODY_PARTS.slice(0, numberOfGuesses)}
+            {/* {BODY_PARTS.slice(0, numberOfGuesses)} */}
+            {displayBody.map((el, idx) => (
+                <div key={idx}>{el}</div>
+            ))}
             <div
                 style={{
                     height: "50px",
